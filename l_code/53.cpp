@@ -30,7 +30,7 @@ public:
         int max_sum = nums[0];
         int current_max = nums[0];
 
-        for(int i = 0; i < n; i++){
+        for(int i = 1; i < n; i++){
           current_max = max(nums[i], current_max + nums[i]);
           max_sum = max(max_sum, current_max);
         }
@@ -43,4 +43,6 @@ int main() {
     Solution sol;
     vector<int> nums = {-2,1,-3,4,-1,2,1,-5,4};
     cout << sol.maxSubArray(nums) << endl; // 输出 6
+    vector<int> nums1 = {1};
+    cout << sol.maxSubArray(nums1) << endl;
 }
