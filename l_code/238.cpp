@@ -38,7 +38,9 @@ public:
         vector<int> answer(n,1);
         // 1 2 3 4
         //
-
+        unsigned u = 4294967295u;
+        int tu = (int)u;
+        cout << "u:" << u << " tu:" << tu << endl;
         for(int i = 1; i < n; i++){
             answer[i] = answer[i - 1] * nums[i - 1];
             //cout << i << " : " << answer[i] << endl;
