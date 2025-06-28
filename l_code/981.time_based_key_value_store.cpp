@@ -32,20 +32,63 @@
 //set 操作中的时间戳 timestamp 都是严格递增的
 //最多调用 set 和 get 操作 2 * 105 次
 
-class TimeMap {
-public:
-  TimeMap() {
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+#include <string>
+#include <algorithm>
 
-  }
+using namespace std;
+
+class TimeMap {
+  unordered_map<string, vector<pair<int, string>>> mp_;
+public:
+
+  TimeMap() {}
 
   void set(string key, string value, int timestamp) {
-
+    mp_[key].push_back({timestamp, value});
   }
 
   string get(string key, int timestamp) {
+    if(mp_.count(key) == 0) return "";
 
+    int left = 0;
+    int right = mp_[key].size() - 1;
+    string res = "";
+
+    while(left <= right) {
+      int md = left + (right - left) / 2;
+      if(mp_[key][md].first <= timestamp){
+        res = mp_[key][md].second;
+        left = md + 1;
+      }else{
+
+        right = md - 1;
+      }
+    }
+
+    return res;
   }
+
 };
+
+int main() {
+  TimeMap timeMap;
+
+  timeMap.set("foo", "bar", 1);
+  cout << timeMap.get("foo", 1) << endl; // 输出: bar
+  cout << timeMap.get("foo", 3) << endl; // 输出: bar
+
+  timeMap.set("foo", "bar2", 4);
+  cout << timeMap.get("foo", 4) << endl; // 输出: bar2
+  cout << timeMap.get("foo", 5) << endl; // 输出: bar2
+
+  cout << timeMap.get("foo", 0) << endl; // 输出: 空字符串
+
+  return 0;
+}
+
 
 /**
  * Your TimeMap object will be instantiated and called as such:
